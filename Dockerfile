@@ -2,7 +2,8 @@ FROM golang:1.11 as atlas
 COPY ./build_atlas_provider.sh .
 RUN bash build_atlas_provider.sh
 
-FROM runatlantis/atlantis:v0.4.8
-RUN wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.16.10/terragrunt_linux_amd64 && chmod +x terragrunt_linux_amd64 && mv terragrunt_linux_amd64 /usr/bin/terragrunt
-COPY --from=atlas /go/bin/terraform-provider-mongodbatlas /usr/local/bin
-COPY --from=atlas /go/bin/terraform-provider-jsondecode /usr/local/bin
+FROM runatlantis/atlantis:v0.4.10
+RUN wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.17.0/terragrunt_linux_amd64 && chmod +x terragrunt_linux_amd64 && mv terragrunt_linux_amd64 /usr/bin/terragrunt
+RUN mkdir -p $HOME/.terraform.d/plugins
+COPY --from=atlas /go/bin/terraform-provider-mongodbatlas $HOME/terraform.d/plugins/linux_amd64/
+COPY --from=atlas /go/bin/terraform-provider-jsondecode $HOME/terraform.d/plugins/linux_amd64/
