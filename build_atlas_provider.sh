@@ -6,10 +6,10 @@ pushd "$GOPATH/src/github.com/akshaykarle/terraform-provider-mongodbatlas/"
 git remote add exosite https://github.com/exosite/terraform-provider-mongodbatlas.git
 git fetch exosite
 git checkout import_cluster
-make build
+CGO_ENABLED=0 make build
 popd
 
 go get github.com/EvilSuperstars/terraform-provider-jsondecode
 pushd "$GOPATH/src/github.com/EvilSuperstars/terraform-provider-jsondecode"
-make build
+CGO_ENABLED=0 make build
 popd
