@@ -42,7 +42,7 @@ RUN set -x && \
   \
   echo "==> Adding Python runtime..."  && \
   apk add --no-cache ${BUILD_PACKAGES} && \
-  pip install --upgrade --force-reinstall pip==9.0.3 && \
+  pip install --upgrade pip && \
   \
   echo "==> Installing Python Dependencies..."  && \
   pip install -r requirements.txt --disable-pip-version-check && \
