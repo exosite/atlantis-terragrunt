@@ -4,3 +4,5 @@ services:
     image: placeholder
     ports:
       - 80
+    cpu_shares: 512
+    mem_limit: 512m
