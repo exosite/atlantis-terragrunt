@@ -1,0 +1,6 @@
+version: "2"
+services:
+  atlantis-terragrunt:
+    image: placeholder
+    ports:
+      - 80
