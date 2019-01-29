@@ -29,6 +29,6 @@ phases:
           cat docker-compose.yml | docker run --rm -i micahhausler/container-transform  | sed "s/\"family.*/\"family\": \"$TASK_DEF_FAMILY\",/" | tee taskdefinition.json
       - aws ecs register-task-definition --cli-input-json file://taskdefinition.json
       - echo Writing image definitions file...
-      - printf '[{"name":"%s","imageUri":"%s"}]' "$CONTAINER_NAME" "$REPO_URI:$IMAGE_TAG" | tee imagedefinitions.json
+      - printf '[{"name":"%s","imageUri":"%s"}]' "$TASK_DEF_FAMILY" "$REPO_URI:$IMAGE_TAG" | tee imagedefinitions.json
 artifacts:
   files: imagedefinitions.json
