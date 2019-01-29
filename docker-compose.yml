@@ -8,8 +8,8 @@ services:
     mem_limit: 512m
     logging:
       driver: awslogs
-        options:
-          awslogs-group: infra-dev-atlantis-terragrunt
-          awslogs-region: us-west-2
-          awslogs-stream-prefix: atlantis-terragrunt
+      options:
+        awslogs-group: infra-dev-atlantis-terragrunt
+        awslogs-region: us-west-2
+        awslogs-stream-prefix: atlantis-terragrunt
 
