@@ -6,3 +6,10 @@ services:
       - 80
     cpu_shares: 512
     mem_limit: 512m
+    logging:
+      driver: awslogs
+        options:
+          awslogs-group: infra-dev-atlantis-terragrunt
+          awslogs-region: us-west-2
+          awslogs-stream-prefix: atlantis-terragrunt
+
