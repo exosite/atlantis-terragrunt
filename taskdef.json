@@ -8,7 +8,7 @@
             ],
             "cpu": 512,
             "essential": true,
-            "image": "placeholder",
+            "image": "<IMAGE_URL_AND_SHA>",
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
