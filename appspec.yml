@@ -1,10 +1,8 @@
 Resources:
-  - TargetService:
+  - infra-dev-atlantis-terragrunt:
     Type: AWS::ECS::Service
     Properties:
       TaskDefinition: <TASK_DEFINITION>
       LoadBalancerInfo: 
           ContainerName: "atlantis-terragrunt" 
           ContainerPort: 80
-# Optional properties
-      PlatformVersion: "LATEST"
