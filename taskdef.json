@@ -1,5 +1,5 @@
 {
-    "executionRoleArn": "arn:aws:iam::197267361986:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::197267361986:role/infra-dev-atlantis-terragrunt-exec",
     "containerDefinitions": [
         {
             "logConfiguration": {
