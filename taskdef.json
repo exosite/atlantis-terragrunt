@@ -1,31 +1,44 @@
 {
+    "executionRoleArn": "arn:aws:iam::197267361986:role/infra-dev-atlantis-terragrunt-exec",
     "containerDefinitions": [
         {
-            "command": [
-                "/bin/sh",
-                "-c",
-                "mkdir /home/atlantis/.ssh && echo $GITHUB_MODULE_BASE64_SSH_DEPLOY_KEY | base64 -d > /home/atlantis/.ssh/id_rsa && chmod 600 /home/atlantis/.ssh/id_rsa && ssh-keyscan -t rsa github.com >> /home/atlantis/.ssh/known_hosts && chown -R atlantis:atlantis /home/atlantis/.ssh && exec /usr/local/bin/docker-entrypoint.sh server"
-            ],
-            "cpu": 512,
-            "essential": true,
-            "image": "197267361986.dkr.ecr.us-west-2.amazonaws.com/nginx:latest",
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
-                    "awslogs-group": "infra-dev-atlantis-terragrunt",
+                    "awslogs-group": "default",
                     "awslogs-region": "us-west-2",
-                    "awslogs-stream-prefix": "atlantis-terragrunt"
+                    "awslogs-stream-prefix": "default"
                 }
             },
-            "memory": 512,
-            "name": "atlantis-terragrunt",
             "portMappings": [
                 {
+                    "hostPort": 80,
+                    "protocol": "tcp",
                     "containerPort": 80
                 }
-            ]
+            ],
+            "cpu": 256,
+            "environment": [],
+            "mountPoints": [],
+            "memory": 256,
+            "memoryReservation": 128,
+            "volumesFrom": [],
+            "image": "197267361986.dkr.ecr.us-west-2.amazonaws.com/nginx:latest",
+            "essential": true,
+            "readonlyRootFilesystem": false,
+            "dockerLabels": {
+                "test": "test"
+            },
+            "name": "infra-dev-atlantis-terragrunt"
         }
     ],
-    "family": "",
+    "memory": "512",
+    "taskRoleArn": "arn:aws:iam::197267361986:role/infra-dev-atlantis-terragrunt-task",
+    "family": "infra-dev-atlantis-terragrunt",
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "networkMode": "awsvpc",
+    "cpu": "256",
     "volumes": []
 }
