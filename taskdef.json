@@ -26,6 +26,7 @@
     ],
     "memory": "512",
     "family": "infra-dev-atlantis-terragrunt",
+    "taskRoleArn": "arn:aws:iam::197267361986:role/infra-dev-atlantis-terragrunt-task",
     "requiresCompatibilities": [
         "FARGATE"
     ],
