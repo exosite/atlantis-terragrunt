@@ -8,7 +8,7 @@
             ],
             "cpu": 512,
             "essential": true,
-            "image": "197267361986.dkr.ecr.us-west-2.amazonaws.com/atlantis-terragrunt:latest",
+            "image": "197267361986.dkr.ecr.us-west-2.amazonaws.com/nginx:latest",
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
