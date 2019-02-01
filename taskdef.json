@@ -1,5 +1,5 @@
 {
-    "executionRoleArn": "arn:aws:iam::197267361986:role/infra-dev-atlantis-terragrunt-exec",
+    "executionRoleArn": "arn:aws:iam::197267361986:role/ecsTaskExecutionRole",
     "containerDefinitions": [
         {
             "logConfiguration": {
@@ -18,27 +18,17 @@
                 }
             ],
             "cpu": 256,
-            "environment": [],
-            "mountPoints": [],
             "memory": 256,
-            "memoryReservation": 128,
-            "volumesFrom": [],
             "image": "197267361986.dkr.ecr.us-west-2.amazonaws.com/nginx:latest",
             "essential": true,
-            "readonlyRootFilesystem": false,
-            "dockerLabels": {
-                "test": "test"
-            },
             "name": "infra-dev-atlantis-terragrunt"
         }
     ],
     "memory": "512",
-    "taskRoleArn": "arn:aws:iam::197267361986:role/infra-dev-atlantis-terragrunt-task",
     "family": "infra-dev-atlantis-terragrunt",
     "requiresCompatibilities": [
         "FARGATE"
     ],
     "networkMode": "awsvpc",
     "cpu": "256",
-    "volumes": []
 }
