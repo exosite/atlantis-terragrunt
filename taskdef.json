@@ -22,6 +22,7 @@
             "image": "<IMAGE_URL>",
             "essential": true,
             "name": "infra-dev-atlantis-terragrunt"
+            "command": ["/bin/chamber", "exec", "infra/dev/atlantis-terragrunt", "--", "atlantis", "server", "--atlantis-url", "$ATLANTIS_URL", "--gh-user", "$GH_USER", "--gh-token", "$GH_TOKEN", "--gh-webhook-secret", "$GH_WEBHOOK_SECRET", "--repo-whitelist", "$REPO_WHITELIST"]
         }
     ],
     "memory": "512",
