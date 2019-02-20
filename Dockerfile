@@ -53,3 +53,5 @@ RUN set -x && \
   echo "==> Cleaning up..."  && \
   apk del build-dependencies && \
   rm -rf /var/cache/apk/*
+
+COPY ./ /home/atlantis

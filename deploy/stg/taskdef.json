@@ -22,7 +22,7 @@
             "image": "<IMAGE_URL>",
             "essential": true,
             "name": "infra-stg-atlantis-terragrunt",
-            "command": ["/bin/chamber", "exec", "infra/stg/atlantis-terragrunt", "--", "atlantis", "server"]
+            "command": ["/bin/sh", "server_with_deploy_key.sh", "infra/stg/atlantis-terragrunt", "--", "atlantis", "server"]
         }
     ],
     "memory": "512",
