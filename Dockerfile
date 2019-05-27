@@ -1,11 +1,13 @@
-FROM golang:1.12 as atlas
+FROM golang:1.12-alpine3.9 as atlas
 COPY ./build_atlas_provider.sh .
+RUN apk update && apk upgrade && \
+	apk add --no-cache bash git make
 RUN bash build_atlas_provider.sh
 
 FROM segment/chamber:2 AS chamber
 
-FROM runatlantis/atlantis:v0.7.1
-RUN wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.17.3/terragrunt_linux_amd64 && chmod +x terragrunt_linux_amd64 && mv terragrunt_linux_amd64 /usr/bin/terragrunt
+FROM runatlantis/atlantis:v0.8.0
+RUN wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.18.6/terragrunt_linux_amd64 && chmod +x terragrunt_linux_amd64 && mv terragrunt_linux_amd64 /usr/bin/terragrunt
 COPY --from=atlas /go/bin/terraform-provider-mongodbatlas /home/atlantis/.terraform.d/plugins/
 COPY --from=atlas /go/bin/terraform-provider-jsondecode /home/atlantis/.terraform.d/plugins/
 COPY --from=chamber /chamber /bin/chamber
