@@ -29,6 +29,7 @@ ENV BUILD_PACKAGES \
   py-pip \
   ca-certificates \
   wget \
+  zip \
   unzip \
   make \
   jq
@@ -49,9 +50,10 @@ RUN set -x && \
   echo "==> Adding Python runtime..."  && \
   apk add --no-cache ${BUILD_PACKAGES} && \
   pip install --upgrade pip && \
+  pip3 install --upgrade pip && \
   \
   echo "==> Installing Python Dependencies..."  && \
-  pip install -r requirements.txt --disable-pip-version-check && \
+  pip2 install -r requirements.txt --disable-pip-version-check && \
   \
   echo "==> Cleaning up..."  && \
   apk del build-dependencies && \
