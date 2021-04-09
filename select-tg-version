@@ -59,12 +59,12 @@ fi
 echo "Using terragrunt version: ${TG_VERSION}"
 
 ### Download correct terragrunt version if it doesn't exist already
-tg_bin_name=terragrunt-${TG_VERSION}
+tg_bin_name=${TG_INSTALL_PATH}/terragrunt-${TG_VERSION}
 tg_release_url=https://github.com/gruntwork-io/terragrunt/releases/download/v${TG_VERSION}
 tg_release_name=terragrunt_linux_amd64
 
 if [[ ! -f ${tg_bin_name} ]]; then
-  echo "Downloading terragrunt ${tg_release_url}/${tg_release_name}"
+  echo "Downloading terragrunt ${tg_release_url}/${tg_release_name} to ${tg_bin_name}"
   curl -L --output ${tg_bin_name} ${tg_release_url}/${tg_release_name}
   correct_sha256=$(curl -L ${tg_release_url}/SHA256SUMS | grep ${tg_release_name} | sed "s|${tg_release_name}|${tg_bin_name}|g")
   if ! $(echo ${correct_sha256} | sha256sum --quiet -c -); then
