@@ -49,4 +49,5 @@ RUN set -x && \
   apk del build-dependencies && \
   rm -rf /var/cache/apk/*
 
+COPY ./select-tg-version /usr/local/bin/
 COPY ./ /home/atlantis

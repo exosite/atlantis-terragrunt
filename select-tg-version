@@ -1,0 +1,79 @@
+#!/bin/bash -e
+
+# Selects, downloads and runs a version of terragrnt based on a few criteria.
+# First, look for .terragrunt-version and read the version if the file exists.
+# if the file doesn't exist, look for terragrunt.hcl and download the newest
+# available version. If neither file exists, fallback to 0.18.6, the last version
+# that supported terragrunt config in terragrunt.tfvars
+#
+# After selecting a version, download that version of terragrunt if it doesn't
+# already exist and place it in /usr/local/bin/.
+#
+# This script can be used in atlantis via a custom workflow
+# workflows:
+#   terragrunt:
+#     plan:
+#       steps:
+#       - env:
+#           name: TERRAGRUNT_TFPATH
+#           command: 'echo "terraform${ATLANTIS_TERRAFORM_VERSION}"'
+#       - run: select-terragrunt-version plan -no-color -out $PLANFILE
+#     apply:
+#       steps:
+#       - env:
+#           name: TERRAGRUNT_TFPATH
+#           command: 'echo "terraform${ATLANTIS_TERRAFORM_VERSION}"'
+#       - run: select-terragrunt-version apply -no-color $PLANFILE
+
+
+# Default terragrunt version. Supports config in terraform.tfvars
+# Must be < 0.19.0
+TG_VERSION=${DEFAULT_TERRAGRUNT_VERSION:-0.18.6}
+
+# New terragrunt version. Supports config in terragrunt.hcl
+# See https://github.com/gruntwork-io/terragrunt/releases for latest version
+# Must be >= 0.19.0
+TG_RECENT_VERSION=${TERRAGRUNT_RECENT_VERSION:-0.28.18}
+
+# Where to put the downloaded terragrnt binary
+TG_INSTALL_PATH=${TERRAGRUNT_INSTALL_PATH:-/usr/local/bin/}
+
+### Set terragrunt version
+# Check for explicitly set terragrunt version in .terragrunt-version
+if [[ -f .terragrunt-version ]]; then
+  tg_version_file=$(cat .terragrunt-version | tr -d '[:space:]')
+  # Sanity check that .terragrunt-version actually contains a version string
+  version_regex='^0\.[0-9]+\.[0-9]+$'
+  if [[ ${tg_version_file} =~ $version_regex ]]; then
+    TG_VERSION=${tg_version_file}
+  else
+    echo "Bad .terragrunt-version, quitting"
+    exit 1
+  fi
+# If terragrunt.hcl exists, grab a version newer than 0.19.0
+elif [[ -f terragrunt.hcl ]]; then
+  TG_VERSION=${TG_RECENT_VERSION}
+fi
+# If neither .terragrunt-version or terragrunt.hcl exist, use the default version set above
+
+echo "Using terragrunt version: ${TG_VERSION}"
+
+### Download correct terragrunt version if it doesn't exist already
+tg_bin_name=terragrunt-${TG_VERSION}
+tg_release_url=https://github.com/gruntwork-io/terragrunt/releases/download/v${TG_VERSION}
+tg_release_name=terragrunt_linux_amd64
+
+if [[ ! -f ${tg_bin_name} ]]; then
+  echo "Downloading terragrunt ${tg_release_url}/${tg_release_name}"
+  curl -L --output ${tg_bin_name} ${tg_release_url}/${tg_release_name}
+  correct_sha256=$(curl -L ${tg_release_url}/SHA256SUMS | grep ${tg_release_name} | sed "s|${tg_release_name}|${tg_bin_name}|g")
+  if ! $(echo ${correct_sha256} | sha256sum --quiet -c -); then
+    echo "sha256 doesn't match"
+	rm ${tg_bin_name}
+    exit 1
+  fi
+  chmod +x ${tg_bin_name}
+fi
+
+${tg_bin_name} version
+${tg_bin_name} $@
