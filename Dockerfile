@@ -6,7 +6,7 @@ RUN bash build_atlas_provider.sh
 
 FROM segment/chamber:2 AS chamber
 
-FROM runatlantis/atlantis:v0.7.2
+FROM runatlantis/atlantis:v0.16.1
 RUN wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.18.6/terragrunt_linux_amd64 && chmod +x terragrunt_linux_amd64 && mv terragrunt_linux_amd64 /usr/bin/terragrunt
 COPY --from=atlas /go/bin/terraform-provider-mongodbatlas /home/atlantis/.terraform.d/plugins/
 COPY --from=atlas /go/bin/terraform-provider-jsondecode /home/atlantis/.terraform.d/plugins/
