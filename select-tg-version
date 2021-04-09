@@ -36,7 +36,7 @@ TG_VERSION=${DEFAULT_TERRAGRUNT_VERSION:-0.18.6}
 TG_RECENT_VERSION=${TERRAGRUNT_RECENT_VERSION:-0.28.18}
 
 # Where to put the downloaded terragrnt binary
-TG_INSTALL_PATH=${TERRAGRUNT_INSTALL_PATH:-/usr/local/bin/}
+TG_INSTALL_PATH=${TERRAGRUNT_INSTALL_PATH:-.}
 
 ### Set terragrunt version
 # Check for explicitly set terragrunt version in .terragrunt-version
