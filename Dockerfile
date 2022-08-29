@@ -5,6 +5,8 @@ RUN wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.18.6/te
 COPY --from=chamber /chamber /bin/chamber
 RUN chown -R atlantis:atlantis /home/atlantis
 
+ENV DEFAULT_TERRAFORM_VERSION=0.14.10
+
 COPY requirements.txt ./
 
 ENV BUILD_PACKAGES \
